@@ -1,6 +1,6 @@
 .App {
   height: 100vh;
-  width: 60em;
+  width: 50em;
   margin-left: auto;
   margin-right: auto;
 }
@@ -39,6 +39,10 @@
 
 .para {
   font-size: 20px;
+}
+
+.container {
+  display: flex;
 }
 
 /* article {

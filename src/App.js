@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import data from "./data/data";
 import Questions from "./components/Questions";
 import "./app.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { ProgressBar } from "react-bootstrap";
+// import ProgressBar from "react-bootstrap/ProgressBar";
 
 function App() {
   const [questions, setQuestions] = useState(data);
@@ -33,7 +35,8 @@ function App() {
           `You ev answered ${rightAnswers + 1} Questions Correctly.`
         );
       }
-      if (currentPage >= 20) {
+      if (currentPage >= 20 && wrongAnswer) {
+        setWrongScore(wrongScore + 5);
         return alert(`You ev answered ${rightAnswers} Questions Correctly.`);
       }
       if (correctAnswer) {
@@ -73,6 +76,25 @@ function App() {
     setWrongAnswer(true);
   };
 
+  const minPercentage = () => {
+    let minPercent = Math.ceil((rightAnswers / questions.length) * 100);
+    return minPercent;
+  };
+  const currentPercentage = () => {
+    let minPercent = Math.ceil(
+      (rightAnswers / (rightAnswers + wrongAnswers)) * 100
+    );
+    return minPercent;
+  };
+  const maxPercentage = () => {
+    let minPercent = Math.ceil(
+      ((questions.length - wrongAnswers) / questions.length) * 100
+    );
+    return minPercent;
+  };
+
+  console.log(minPercentage());
+
   return (
     <div className="App">
       <div className="top-bar">
@@ -108,17 +130,22 @@ function App() {
           </button>
         </div>
         <div className="score">
-          <h2>Right Score: {score}</h2>
-          <h2>right Answers: {rightAnswers}</h2>
-          <h2>Percentage: {Math.floor((rightAnswers / 20) * 100)}</h2>
-          <h2>wrong Score: {wrongScore}</h2>
-          <h2>wrong Answers: {wrongAnswers}</h2>
-          <h2>Current Page: {currentPage}</h2>
-          <h2>Pages Left: {currentPage - (questions.length + 1)}</h2>
+          {/* <h2>Score: {Math.ceil((rightAnswers / 20) * 100)}%</h2> */}
+          <h2>Minimum Percentage: {minPercentage()}%</h2>
+          <h2>Current Percentage: {currentPercentage()}%</h2>
+          <h2>Maximum Score: {maxPercentage()}%</h2>
         </div>
-        <div className="progress">
-          {console.log(Math.floor((rightAnswers / 20) * 100))}
-          <ProgressBar now={score} min={0} max={100} />
+        <div className="progressBar">
+          <ProgressBar>
+            <ProgressBar
+              striped
+              variant="success"
+              now={minPercentage()}
+              key={1}
+            />
+            <ProgressBar variant="warning" now={25} key={2} />
+            <ProgressBar striped variant="danger" now={15} key={3} />
+          </ProgressBar>
         </div>
       </div>
     </div>
