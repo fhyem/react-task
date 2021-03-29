@@ -4,7 +4,6 @@ import Questions from "./components/Questions";
 import "./app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ProgressBar } from "react-bootstrap";
-// import ProgressBar from "react-bootstrap/ProgressBar";
 
 function App() {
   const [questions, setQuestions] = useState(data);
@@ -81,19 +80,17 @@ function App() {
     return minPercent;
   };
   const currentPercentage = () => {
-    let minPercent = Math.ceil(
+    let currentPercent = Math.ceil(
       (rightAnswers / (rightAnswers + wrongAnswers)) * 100
     );
-    return minPercent;
+    return currentPercent;
   };
   const maxPercentage = () => {
-    let minPercent = Math.ceil(
+    let maxPercent = Math.ceil(
       ((questions.length - wrongAnswers) / questions.length) * 100
     );
-    return minPercent;
+    return maxPercent;
   };
-
-  console.log(minPercentage());
 
   return (
     <div className="App">
@@ -130,7 +127,6 @@ function App() {
           </button>
         </div>
         <div className="score">
-          {/* <h2>Score: {Math.ceil((rightAnswers / 20) * 100)}%</h2> */}
           <h2>Minimum Percentage: {minPercentage()}%</h2>
           <h2>Current Percentage: {currentPercentage()}%</h2>
           <h2>Maximum Score: {maxPercentage()}%</h2>
