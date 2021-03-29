@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
-import data from "../src/data/data.json";
+import data from "./data/data";
 import Questions from "./components/Questions";
 import "./app.css";
+import { ProgressBar } from "react-bootstrap";
 
 function App() {
   const [questions, setQuestions] = useState(data);
+  const [answerSelected, setAnswerSelected] = useState(false);
   let [correctAnswer, setCorrectAnswer] = useState(false);
+  let [wrongAnswer, setWrongAnswer] = useState(false);
   let [rightAnswers, setRightAnswers] = useState(0);
+  let [wrongAnswers, setWrongAnswers] = useState(0);
   let [currentPage, setCurrentPage] = useState(1);
   let [questionsPerPage, setQuestionsPerPage] = useState(1);
+  let [score, setScore] = useState(0);
+  let [wrongScore, setWrongScore] = useState(0);
 
   // get current posts
   const indexOfLastQuestion = currentPage * questionsPerPage;
@@ -19,36 +25,52 @@ function App() {
   );
 
   const handleNext = () => {
-    if (currentPage >= 20 && correctAnswer) {
-      return alert(
-        `You ev answered ${rightAnswers + 1} Questions Correctly out of 20.`
-      );
-    }
-    if (currentPage >= 20) {
-      return alert(
-        `You ev answered ${rightAnswers} Questions Correctly out of 20.`
-      );
-    }
-    if (correctAnswer) {
-      let addOne = (num1, num2) => {
-        return num1 + num2;
-      };
-      setRightAnswers(addOne(rightAnswers, 1));
-      console.log(rightAnswers);
-      setCurrentPage(currentPage + 1);
-      setCorrectAnswer(false);
+    if (answerSelected) {
+      if (currentPage >= 20 && correctAnswer) {
+        setScore(score + 5);
+
+        return alert(
+          `You ev answered ${rightAnswers + 1} Questions Correctly.`
+        );
+      }
+      if (currentPage >= 20) {
+        return alert(`You ev answered ${rightAnswers} Questions Correctly.`);
+      }
+      if (correctAnswer) {
+        let sum = (num1, num2) => {
+          return num1 + num2;
+        };
+
+        setRightAnswers(sum(rightAnswers, 1));
+        setScore(score + 5);
+        setCurrentPage(currentPage + 1);
+        setCorrectAnswer(false);
+        setWrongAnswer(false);
+        setAnswerSelected(false);
+      } else {
+        let sum = (num1, num2) => {
+          return num1 + num2;
+        };
+        setWrongAnswers(sum(wrongAnswers, 1));
+        setWrongScore(wrongScore + 5);
+        setCurrentPage(currentPage + 1);
+        setCorrectAnswer(false);
+        setWrongAnswer(false);
+        setAnswerSelected(false);
+      }
     } else {
-      setCurrentPage(currentPage + 1);
-      setCorrectAnswer(false);
+      return null;
     }
   };
 
-  const handleAnswer = (e) => {
-    if (e.target.value) {
-      setCorrectAnswer(true);
-    } else {
-      return console.log("Sorry!", e.target.value);
-    }
+  const handleCorrectAnswer = (e) => {
+    setAnswerSelected(true);
+    setCorrectAnswer(true);
+  };
+
+  const handleWrongAnswer = (e) => {
+    setAnswerSelected(true);
+    setWrongAnswer(true);
   };
 
   return (
@@ -70,13 +92,14 @@ function App() {
             questions={currentQuestion}
             data={questions.length}
             currentPage={currentPage}
-            handleAnswer={handleAnswer}
+            handleCorrectAnswer={handleCorrectAnswer}
+            handleWrongAnswer={handleWrongAnswer}
           />
         </div>
       </div>
       <div className="footer">
         <div className="next">
-          <h3>{correctAnswer ? "Correct!" : null}</h3>
+          <h3>{correctAnswer ? "Correct!" : wrongAnswer ? "Sorry!" : null}</h3>
           <button
             type="button"
             className="btn btn-primary"
@@ -85,18 +108,17 @@ function App() {
           </button>
         </div>
         <div className="score">
-          <h5>Score: 67%</h5>
-          <h4>Max Score: 75%</h4>
+          <h2>Right Score: {score}</h2>
+          <h2>right Answers: {rightAnswers}</h2>
+          <h2>Percentage: {Math.floor((rightAnswers / 20) * 100)}</h2>
+          <h2>wrong Score: {wrongScore}</h2>
+          <h2>wrong Answers: {wrongAnswers}</h2>
+          <h2>Current Page: {currentPage}</h2>
+          <h2>Pages Left: {currentPage - (questions.length + 1)}</h2>
         </div>
         <div className="progress">
-          <div
-            className="progress-bar"
-            aria-valuenow="70"
-            aria-valuemin="67"
-            aria-valuemax="75"
-            style={{ width: "70%" }}>
-            <span className="sr-only">70% Complete</span>
-          </div>
+          {console.log(Math.floor((rightAnswers / 20) * 100))}
+          <ProgressBar now={score} min={0} max={100} />
         </div>
       </div>
     </div>
