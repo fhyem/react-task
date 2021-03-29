@@ -5,8 +5,10 @@ import "./app.css";
 
 function App() {
   const [questions, setQuestions] = useState(data);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [questionsPerPage, setQuestionsPerPage] = useState(1);
+  let [correctAnswer, setCorrectAnswer] = useState(false);
+  let [rightAnswers, setRightAnswers] = useState(0);
+  let [currentPage, setCurrentPage] = useState(1);
+  let [questionsPerPage, setQuestionsPerPage] = useState(1);
 
   // get current posts
   const indexOfLastQuestion = currentPage * questionsPerPage;
@@ -17,10 +19,36 @@ function App() {
   );
 
   const handleNext = () => {
-    if (currentPage >= 20) {
-      return null;
+    if (currentPage >= 20 && correctAnswer) {
+      return alert(
+        `You ev answered ${rightAnswers + 1} Questions Correctly out of 20.`
+      );
     }
-    setCurrentPage(currentPage + 1);
+    if (currentPage >= 20) {
+      return alert(
+        `You ev answered ${rightAnswers} Questions Correctly out of 20.`
+      );
+    }
+    if (correctAnswer) {
+      let addOne = (num1, num2) => {
+        return num1 + num2;
+      };
+      setRightAnswers(addOne(rightAnswers, 1));
+      console.log(rightAnswers);
+      setCurrentPage(currentPage + 1);
+      setCorrectAnswer(false);
+    } else {
+      setCurrentPage(currentPage + 1);
+      setCorrectAnswer(false);
+    }
+  };
+
+  const handleAnswer = (e) => {
+    if (e.target.value) {
+      setCorrectAnswer(true);
+    } else {
+      return console.log("Sorry!", e.target.value);
+    }
   };
 
   return (
@@ -42,12 +70,13 @@ function App() {
             questions={currentQuestion}
             data={questions.length}
             currentPage={currentPage}
+            handleAnswer={handleAnswer}
           />
         </div>
       </div>
       <div className="footer">
         <div className="next">
-          <h3></h3>
+          <h3>{correctAnswer ? "Correct!" : null}</h3>
           <button
             type="button"
             className="btn btn-primary"

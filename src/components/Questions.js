@@ -1,7 +1,7 @@
 import React from "react";
 import Rating from "./Rating";
 
-const Questions = ({ questions, data, currentPage }) => {
+const Questions = ({ questions, data, currentPage, handleAnswer }) => {
   return (
     <div>
       {questions.map((item) => {
@@ -39,18 +39,52 @@ const Questions = ({ questions, data, currentPage }) => {
             </div>
             <div className="container">
               <div className="row">
-                <div className="btn btn-primary col-xs-2">
+                <button
+                  type="button"
+                  className="btn btn-primary col-xs-2"
+                  onClick={(e) =>
+                    e.target.value === correct_answer
+                      ? handleAnswer(e)
+                      : alert("Sorry. Try Again")
+                  }
+                  value={incorrect_answers[0]}>
                   {incorrect_answers[0]}
-                </div>
-                <div className="btn btn-primary col-xs-2">
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary col-xs-2"
+                  onClick={(e) =>
+                    e.target.value === correct_answer
+                      ? handleAnswer(e)
+                      : alert("Sorry. Try Again")
+                  }
+                  value={incorrect_answers[1]}>
                   {incorrect_answers[1]}
-                </div>
+                </button>
               </div>
               <div className="row">
-                <div className="btn btn-primary col-xs-2">{correct_answer}</div>
-                <div className="btn btn-primary col-xs-2">
+                <button
+                  type="button"
+                  className="btn btn-primary col-xs-2"
+                  onClick={(e) =>
+                    e.target.value === correct_answer
+                      ? handleAnswer(e)
+                      : alert("Sorry. Try Again")
+                  }
+                  value={correct_answer}>
+                  {correct_answer}
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary col-xs-2"
+                  onClick={(e) =>
+                    e.target.value === correct_answer
+                      ? handleAnswer(e)
+                      : alert("Sorry. Try Again")
+                  }
+                  value={incorrect_answers[2]}>
                   {incorrect_answers[2]}
-                </div>
+                </button>
               </div>
             </div>
           </article>
