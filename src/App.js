@@ -47,7 +47,7 @@ function App() {
       </div>
       <div className="footer">
         <div className="next">
-          <h3>Correct!</h3>
+          <h3></h3>
           <button
             type="button"
             className="btn btn-primary"

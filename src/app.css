@@ -37,6 +37,10 @@
   text-align: center;
 }
 
+.para {
+  font-size: 20px;
+}
+
 /* article {
   position: absolute;
   top: 0;

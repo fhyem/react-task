@@ -4,15 +4,15 @@ import Rating from "./Rating";
 const Questions = ({ questions, data, currentPage }) => {
   return (
     <div>
-      {questions.map((question) => {
+      {questions.map((item) => {
         const {
           category,
           type,
           difficulty,
-          quiz,
+          question,
           correct_answer,
           incorrect_answers,
-        } = question;
+        } = item;
 
         return (
           <article key={currentPage}>
@@ -35,7 +35,7 @@ const Questions = ({ questions, data, currentPage }) => {
               </div>
             </div>
             <div className="para">
-              <p>{quiz}</p>
+              <p>{question}</p>
             </div>
             <div className="container">
               <div className="row">
