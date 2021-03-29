@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import data from "./data/data";
 import Questions from "./components/Questions";
 import "./app.css";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import { ProgressBar } from "react-bootstrap";
 
 function App() {
@@ -126,12 +125,9 @@ function App() {
             Next Question
           </button>
         </div>
-        <div className="score">
-          <h2>Minimum Percentage: {minPercentage()}%</h2>
-          <h2>Current Percentage: {currentPercentage()}%</h2>
-          <h2>Maximum Score: {maxPercentage()}%</h2>
-        </div>
+        <div className="score"></div>
         <div className="progressBar">
+          <h2>Minimum Percentage: {minPercentage()}%</h2>
           <ProgressBar>
             <ProgressBar
               striped
@@ -139,8 +135,19 @@ function App() {
               now={minPercentage()}
               key={1}
             />
-            <ProgressBar variant="warning" now={25} key={2} />
-            <ProgressBar striped variant="danger" now={15} key={3} />
+          </ProgressBar>
+          <h2>Current Percentage: {currentPercentage()}%</h2>
+          <ProgressBar>
+            <ProgressBar variant="warning" now={currentPercentage()} key={2} />
+          </ProgressBar>
+          <h2>Maximum Score: {maxPercentage()}%</h2>
+          <ProgressBar>
+            <ProgressBar
+              striped
+              variant="danger"
+              now={maxPercentage()}
+              key={3}
+            />
           </ProgressBar>
         </div>
       </div>
