@@ -1,25 +1,24 @@
 import React from "react";
-import data from "../data/data.json";
 import Rating from "./Rating";
-import "./quiz.css";
 
-function Quiz() {
+const Questions = ({ questions, data, currentPage }) => {
   return (
-    <div className="card">
-      {data.map((item, index) => {
+    <div>
+      {questions.map((question) => {
         const {
           category,
           type,
           difficulty,
-          question,
+          quiz,
           correct_answer,
           incorrect_answers,
-        } = item;
+        } = question;
+
         return (
-          <div key={index}>
+          <article key={currentPage}>
             <div className="heading">
               <h1>
-                Question {index} of {data.length}
+                Question {currentPage} of {data}
               </h1>
               <p>{category}</p>
               <div>
@@ -36,7 +35,7 @@ function Quiz() {
               </div>
             </div>
             <div className="para">
-              <p>{question}</p>
+              <p>{quiz}</p>
             </div>
             <div className="container">
               <div className="row">
@@ -54,15 +53,11 @@ function Quiz() {
                 </div>
               </div>
             </div>
-            <div className="next">
-              <h3>Correct!</h3>
-              <button className="btn btn-primary">Next Question</button>
-            </div>
-          </div>
+          </article>
         );
       })}
     </div>
   );
-}
+};
 
-export default Quiz;
+export default Questions;
