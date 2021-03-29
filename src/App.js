@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import data from "./data/data";
 import Questions from "./components/Questions";
 import "./app.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import { ProgressBar } from "react-bootstrap";
 
 function App() {
